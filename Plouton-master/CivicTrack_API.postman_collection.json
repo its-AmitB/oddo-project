@@ -1,0 +1,370 @@
+{
+	"info": {
+		"_postman_id": "civictrack-api-collection",
+		"name": "CivicTrack API",
+		"description": "Complete API collection for CivicTrack Android application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/profile",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "profile"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get Categories",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": ["{{base_url}}"],
+							"path": ["categories"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Issues",
+			"item": [
+				{
+					"name": "Create Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Broken Street Light",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Street light is not working on Main Street",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "{{category_id}}",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "40.7128",
+									"type": "text"
+								},
+								{
+									"key": "lng",
+									"value": "-74.0060",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Main Street, New York",
+									"type": "text"
+								},
+								{
+									"key": "anonymous",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/issues",
+							"host": ["{{base_url}}"],
+							"path": ["issues"]
+						}
+					}
+				},
+				{
+					"name": "Get Issues",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/issues?status=Reported&page=1&limit=10",
+							"host": ["{{base_url}}"],
+							"path": ["issues"],
+							"query": [
+								{
+									"key": "status",
+									"value": "Reported"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Nearby Issues",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/issues/nearby?lat=40.7128&lng=-74.0060&radius=5000",
+							"host": ["{{base_url}}"],
+							"path": ["issues", "nearby"],
+							"query": [
+								{
+									"key": "lat",
+									"value": "40.7128"
+								},
+								{
+									"key": "lng",
+									"value": "-74.0060"
+								},
+								{
+									"key": "radius",
+									"value": "5000"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Issue by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/issues/{{issue_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["issues", "{{issue_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Issue Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"In Progress\",\n  \"note\": \"Work started on fixing the issue\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/issues/{{issue_id}}/status",
+							"host": ["{{base_url}}"],
+							"path": ["issues", "{{issue_id}}", "status"]
+						}
+					}
+				},
+				{
+					"name": "Flag Issue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Spam or inappropriate content\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/issues/{{issue_id}}/flag",
+							"host": ["{{base_url}}"],
+							"path": ["issues", "{{issue_id}}", "flag"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Flagged Issues",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/issues/flagged",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "issues", "flagged"]
+						}
+					}
+				},
+				{
+					"name": "Ban User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"{{user_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/ban-user",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "ban-user"]
+						}
+					}
+				},
+				{
+					"name": "Get Analytics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/analytics",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "analytics"]
+						}
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/admin/users",
+							"host": ["{{base_url}}"],
+							"path": ["admin", "users"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api/v1"
+		},
+		{
+			"key": "token",
+			"value": "your_jwt_token_here"
+		},
+		{
+			"key": "admin_token",
+			"value": "your_admin_jwt_token_here"
+		},
+		{
+			"key": "category_id",
+			"value": "category_id_from_get_categories"
+		},
+		{
+			"key": "issue_id",
+			"value": "issue_id_from_create_issue"
+		},
+		{
+			"key": "user_id",
+			"value": "user_id_from_get_all_users"
+		}
+	]
+} 

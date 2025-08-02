@@ -1,0 +1,87 @@
+{
+  "info": {
+    "name": "CivicTrack API",
+    "description": "API collection for CivicTrack Android app"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"test\",\"email\":\"test@test.com\",\"password\":\"password123\"}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@test.com\",\"password\":\"password123\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Issues",
+      "item": [
+        {
+          "name": "Get Issues",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/issues"
+          }
+        },
+        {
+          "name": "Get Nearby",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/issues/nearby?lat=40.7128&lng=-74.0060"
+          }
+        },
+        {
+          "name": "Create Issue",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/issues",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {"key": "title", "value": "Test Issue"},
+                {"key": "description", "value": "Test Description"},
+                {"key": "category", "value": "{{category_id}}"},
+                {"key": "lat", "value": "40.7128"},
+                {"key": "lng", "value": "-74.0060"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/categories"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {"key": "base_url", "value": "http://localhost:5000/api/v1"},
+    {"key": "category_id", "value": "category_id_here"}
+  ]
+} 
